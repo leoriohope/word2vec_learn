@@ -9,15 +9,19 @@ class InputData:
     """Process input data into word2vec format for use.
 
     Attributes:
-        word2id:
-        id2word:
-        word_frequency: 
+        word2id: A map with key: id and value: word
+        id2word: A map with key: word and value: id
+        vocab: The set of all words
+        trigrams: A array with [[2][1]] size to represent the context
     """
     def __init__(self, filename):
         self.filename = filename
         self.rawFile = self.load_data()
         self.fileArray = self.rawFile.split()
-        self.vocab = set (self.fileArray)
+        self.vocab = set(self.fileArray)
+        self.word2id = {i: word for i, word in enumerate(self.vocab)} # Make a map, key: id, value: word
+        self.id2word = {word: i for i, word in enumerate(self.vocab)} # Make a map, key: word, value: id
+        self.trigrams = [([self.fileArray[i], self.fileArray[i+1]], self.fileArray[i+2]) for i in range(len(self.fileArray) - 2)]
 
     def load_data(self):
         with open(self.filename, "rb") as file:
@@ -27,6 +31,8 @@ class InputData:
             
 if __name__ == "__main__":
     dataset = InputData("medium_text.txt")
-    print(dataset.vocab)
+    # print(dataset.word2id)
+    # print(dataset.id2word)
+    print(dataset.trigrams)
 
 
