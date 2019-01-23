@@ -52,6 +52,7 @@ class InputData:
 def make_context_vector(context, word_to_ix):
     idxs = [word_to_ix[w] for w in context]
     return torch.tensor(idxs, dtype=torch.long)
+
             
 # if __name__ == "__main__":
 #     dataset = InputData("medium_text.txt")

@@ -11,7 +11,8 @@ FILENAME = "medium_text.txt"
 EPCHO = 100
 LR = 0.001
 CONTEXT_SIZE = 4
-EMBEDDING_DIM = 10
+EMBEDDING_DIM = 5
+OUTFILE = "out_parameters.txt"
 
 #Data prepare
 data_set = InputData(FILENAME)
@@ -19,6 +20,7 @@ train_set = data_set.cbow_train_data[:int(len(data_set.cbow_train_data) * 0.6)]
 test_set = data_set.cbow_train_data[int(len(data_set.cbow_train_data) * 0.6):]
 vocab = data_set.vocab
 word_dict = data_set.word2id
+id2word = data_set.id2word
 
 #Train prepare
 loss_func = nn.NLLLoss()
@@ -42,4 +44,6 @@ for epoch in range(EPCHO):
             # test_output = model()
             print("Epoch: %s " % epoch, "| loss: %.4f" % loss.data.numpy())
     losses.append(total_loss)
-print(model.embeedings.parameters)
+
+print(losses)
+model.output_vec(id2word, OUTFILE)
