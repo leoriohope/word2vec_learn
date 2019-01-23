@@ -3,6 +3,7 @@ from collections import deque
 from nltk.tokenize import word_tokenize
 import nltk
 import torch
+from nltk.tokenize import RegexpTokenizer
 
 nltk.download("punkt")
 
@@ -18,7 +19,7 @@ class InputData:
     def __init__(self, filename):
         self.filename = filename
         self.rawFile = self.load_data()
-        self.fileArray = self.rawFile.split()
+        self.fileArray = self.clean_and_tokenize(self.rawFile)
         self.vocab = set(self.fileArray)
         self.id2word = {i: word for i, word in enumerate(self.vocab)} # Make a map, key: id, value: word
         self.word2id = {word: i for i, word in enumerate(self.vocab)} # Make a map, key: word, value: id
@@ -29,8 +30,14 @@ class InputData:
     def load_data(self):
         with open(self.filename, "rb") as file:
             processsed_text = file.read().decode("utf-8").strip() #strip is to remove start and end chars in the file
-            # print(type(processsed_text))
+            # print(processsed_text)
         return processsed_text
+
+    def clean_and_tokenize(self, rawfile):
+        lower = rawfile.lower()
+        tokenizer = RegexpTokenizer(r'\w+')
+        filearray = tokenizer.tokenize(lower)
+        return filearray
 
     def cbow_prepare(self):
         data = []
@@ -56,8 +63,8 @@ def make_context_vector(context, word_to_ix):
             
 # if __name__ == "__main__":
 #     dataset = InputData("medium_text.txt")
-    # print(dataset.word2id)
-    # print(dataset.id2word)
-    # print(dataset.cbow_train_data[:5])
+#     # print(dataset.word2id)
+#     # print(dataset.id2word)
+#     print(dataset.cbow_train_data[:100])
 
 

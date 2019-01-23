@@ -8,7 +8,7 @@ import model
 
 #Hyper parameters
 FILENAME = "medium_text.txt"
-EPCHO = 100
+EPCHO = 500
 LR = 0.001
 CONTEXT_SIZE = 4
 EMBEDDING_DIM = 5
@@ -16,8 +16,8 @@ OUTFILE = "out_parameters.txt"
 
 #Data prepare
 data_set = InputData(FILENAME)
-train_set = data_set.cbow_train_data[:int(len(data_set.cbow_train_data) * 0.6)]
-test_set = data_set.cbow_train_data[int(len(data_set.cbow_train_data) * 0.6):]
+train_set = data_set.cbow_train_data[:int(len(data_set.cbow_train_data) * 0.8)]
+test_set = data_set.cbow_train_data[int(len(data_set.cbow_train_data) * 0.8):]
 vocab = data_set.vocab
 word_dict = data_set.word2id
 id2word = data_set.id2word
