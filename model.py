@@ -58,5 +58,5 @@ class SkipGram(nn.Module):
                 file.write("%s" % embeddings[wid])
 
         
-# model = CBOW(3,2,2)
-# print(model)
+model = CBOW(3,2,2)
+print(model)
